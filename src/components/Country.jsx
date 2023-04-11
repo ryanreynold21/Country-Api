@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useGetCountryQuery } from '../features/CountryApi'
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import { motion } from 'framer-motion'
 
 const Country = () => {
   const {data} = useGetCountryQuery();
@@ -13,7 +14,13 @@ const Country = () => {
       {country?.map(country => {
         return (
           <Link to={`/${country?.name}`}>
-          <div key={country?.area} className="card w-96 bg-base-100 dark:bg-slate-700 dark:text-white shadow-xl p-5">
+          <motion.div
+              layout
+              animate={{opacity : 1}} 
+              initial={{opacity : 0}} 
+              exit={{opacity : 1}}
+              transition={{duration:0.5}}
+          key={country?.area} className="card w-96 bg-base-100 dark:bg-slate-700 dark:text-white shadow-xl p-5">
             <img className=' w-full h-[200px]' src={country?.flag} alt="" />
             <div className="card-body items-center text-center">
               <h2 className="card-title font-bold text-2xl">{country?.name}</h2>
@@ -23,7 +30,7 @@ const Country = () => {
                 <p>Region : <span className=' text-gray-500'> {country?.region} </span>  </p>
                 <p>Capital : <span className=' text-gray-500'> {country?.capital} </span> </p>
               </div>
-        </div>
+        </motion.div>
          </Link>
         )
       } )}

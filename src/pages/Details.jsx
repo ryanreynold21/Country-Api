@@ -3,11 +3,26 @@ import Navbar from '../components/Navbar'
 import { Link, useParams } from 'react-router-dom'
 import { useGetCountryQuery } from '../features/CountryApi';
 import {BsArrowLeft} from 'react-icons/bs'
-
+import { motion } from 'framer-motion';
 const Details = () => {
   const {id} = useParams();
   const {data} = useGetCountryQuery();
   const filteredCountry = data?.filter(country => country?.name == id)
+  const imgVariants = {
+    hidden :{x:'-100vw'},
+    visible:{
+      x:0,
+      transition:{duration:2}
+    }
+  }
+  const contentVariants = {
+    hidden :{x:'100vw'},
+    visible:{
+      x:0,
+      transition:{duration:2}
+    }
+  }
+
   return (
     <div className=' bg-gray-100 dark:bg-slate-800'>
       <Navbar />
@@ -19,8 +34,18 @@ const Details = () => {
           return(
             <div key={country?.name} className=" mx-36 mt-20 dark:text-white h-screen">
               <div className="hero-content flex-col lg:flex-row">
+                <motion.div
+                variants={imgVariants}
+                initial='hidden'
+                animate='visible'
+                className="">
                 <img src={country?.flag} className=" w-[500px] rounded-lg shadow-2xl" />
-                <div>
+                </motion.div>
+                <motion.div
+                 variants={contentVariants}
+                 initial='hidden'
+                 animate='visible'
+                >
                   <h1 className="text-5xl font-bold">{country?.name}</h1>
                   <div className=" flex mt-5 gap-2">
                   <div className=" flex flex-col ml-4 mb-5 font-bold text-lg">
@@ -36,7 +61,7 @@ const Details = () => {
                     <p>Languages : <span className=' text-gray-500'>  {country?.languages?.map(lan => <span> {lan.name},</span>)}  </span> </p>
                   </div>
                   </div>
-                </div>
+                </motion.div>
               </div>
             </div>
           )

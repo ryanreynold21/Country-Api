@@ -32,7 +32,7 @@ const Filter = () => {
                           onChange={(e) =>{ setSearch(e.target.value)}}
                           type="text"
                           placeholder="Search…"
-                          className="input input-bordered dark:bg-slate-700" />
+                          className="input input-bordered dark:bg-slate-700 dark:text-white" />
                         <button className=' btn text-xl'>
                             <AiOutlineSearch />
                         </button>
